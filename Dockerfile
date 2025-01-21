@@ -1,8 +1,11 @@
 FROM taehun3446/systemd-cupy:v13.3.0-12.4.1-cudnn-devel-ubuntu22.04
 
-RUN echo "fastapi\nuvicorn" > requirements.txt \
-         && pip3 install --no-cache-dir -r \
-                 requirements.txt
+RUN pip3 install --no-cache-dir \
+        fastapi \
+        uvicorn \
+        requests \
+        pydantic \
+        sqlite-utils
 
 WORKDIR /app
 
