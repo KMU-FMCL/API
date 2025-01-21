@@ -27,6 +27,11 @@ CREATE TABLE IF NOT EXISTS usage_logs (
     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
 )
 """)
+
+cursor.execute("SELECT token FROM tokens WHERE token=?", ('my-secret-token',))
+if not cursor.fetchone():
+    cursor.execute("INSERT INTO tokens(token, description) VALUES (?, ?)", ('my-secret-token', '테스트용 토큰'))
+
 conn.commit()
 conn.close()
 
@@ -93,7 +98,7 @@ async def process_data(input_data: DataInput):
 
     for m in load_gpu_module():
         if hasattr(m, "gpu_sum_of_squares"):
-            result = m.gpu_sum_of_squares(input_data.data_list)
+            result = float(m.gpu_sum_of_squares(input_data.data_list))
             log_usage(token, "/process")
 
             return {"result": result}
