@@ -9,7 +9,7 @@ RUN pip3 install --no-cache-dir \
 
 WORKDIR /app
 
-COPY app/ /app/
+COPY app/main.py /app/
 
 EXPOSE 8000
 
